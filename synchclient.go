@@ -906,6 +906,24 @@ func (c *syncClient) Hgetall(arg0 string) (result [][]byte, err Error) {
 
 }
 
+// Redis HGETALL command.
+func (c *syncClient) Hmget(key string, keys []string) (result [][]byte, err Error) {
+	keybytes := []byte(key)
+
+        keysbytes := [][]byte{keybytes}
+        for _, k := range keys {
+            keysbytes = append(keysbytes, []byte(k))
+        }
+
+	var resp Response
+	resp, err = c.conn.ServiceRequest(&HMGET, keysbytes)
+	if err == nil {
+		result = resp.GetMultiBulkData()
+	}
+	return result, err
+}
+
+
 // Redis FLUSHDB command.
 func (c *syncClient) Flushdb() (err Error) {
 	_, err = c.conn.ServiceRequest(&FLUSHDB, [][]byte{})

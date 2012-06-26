@@ -138,7 +138,7 @@ type Client interface {
 	// Redis SAVE command.
 	Save() Error
 
-	// Redis KEYS command using "*" wildcard 
+	// Redis KEYS command using "*" wildcard
 	AllKeys() (result []string, err Error)
 
 	// Redis KEYS command.
@@ -309,6 +309,9 @@ type Client interface {
 	// Redis HGETALL command.
 	Hgetall(key string) (result [][]byte, err Error)
 
+	// Redis HMGET command.
+	Hmget(key string, keys []string) (result [][]byte, err Error)
+
 	// Redis FLUSHDB command.
 	Flushdb() Error
 
@@ -356,7 +359,7 @@ type AsyncClient interface {
 	// Redis SAVE command.
 	Save() (status FutureBool, err Error)
 
-	// Redis KEYS command using "*" wildcard 
+	// Redis KEYS command using "*" wildcard
 	AllKeys() (result FutureKeys, err Error)
 
 	// Redis KEYS command.

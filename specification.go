@@ -1,11 +1,11 @@
 //   Copyright 2009-2012 Joubin Houshyar
-// 
+//
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
 //   You may obtain a copy of the License at
-//    
+//
 //   http://www.apache.org/licenses/LICENSE-2.0
-//    
+//
 //   Unless required by applicable law or agreed to in writing, software
 //   distributed under the License is distributed on an "AS IS" BASIS,
 //   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,7 +18,7 @@ package redis
 // PROTOCOL SPEC
 //
 // Various other elements of the package use the artifacts of this file to
-// negotiate the Redis protocol. 
+// negotiate the Redis protocol.
 //
 // Redis version: 1.n
 // ----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ func GetKeyType(typename string) (keytype KeyType) {
 	return
 }
 
-// Not yet used -- TODO: decide if returning status (say for Set) for non error cases 
+// Not yet used -- TODO: decide if returning status (say for Set) for non error cases
 // really buys us anything beyond (useless) consistency.
 //
 type Status bool
@@ -101,6 +101,7 @@ const (
 	STATUS
 	BULK
 	MULTI_BULK
+	KEY_MULTI_BULK
 )
 
 // Describes a given Redis command
@@ -166,6 +167,7 @@ var (
 	HGET          Command = Command{"HGET", KEY_KEY, BULK}
 	HSET          Command = Command{"HSET", KEY_KEY_VALUE, STATUS}
 	HGETALL       Command = Command{"HGETALL", KEY, MULTI_BULK}
+	HMGET         Command = Command{"HMGET", KEY_MULTI_KEY, MULTI_BULK}
 	ZADD          Command = Command{"ZADD", KEY_IDX_VALUE, BOOLEAN}
 	ZREM          Command = Command{"ZREM", KEY_VALUE, BOOLEAN}
 	ZCARD         Command = Command{"ZCARD", KEY, NUMBER}
@@ -177,7 +179,7 @@ var (
 	FLUSHDB       Command = Command{"FLUSHDB", NO_ARG, STATUS}
 	FLUSHALL      Command = Command{"FLUSHALL", NO_ARG, STATUS}
 	MOVE          Command = Command{"MOVE", KEY_NUM, BOOLEAN}
-	// TODO	SORT		(RequestType.MULTI_KEY,		ResponseType.MULTI_BULK), 
+	// TODO	SORT		(RequestType.MULTI_KEY,		ResponseType.MULTI_BULK),
 	SORT     Command = Command{"SORT", KEY_SPEC, MULTI_BULK}
 	SAVE     Command = Command{"SAVE", NO_ARG, STATUS}
 	BGSAVE   Command = Command{"BGSAVE", NO_ARG, STATUS}
